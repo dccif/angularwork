@@ -1,0 +1,113 @@
+body{
+	text-align: center;
+}
+
+form{
+	display: inline-block;
+}
+
+input{
+	display:inline-table;
+}
+
+div{
+	display: inline-block;
+}
+
+.wrapper{
+	display: grid;
+}
+
+#firstname{
+	width: 48%;
+}
+#lastname{
+	width: 48%;
+}
+
+#mobileno{
+	width: 98%;
+}
+
+#email{
+	width: 98%;
+}
+
+#check{
+	width: 40%;
+}
+
+#alltxt{
+	width: 80%;
+}
+
+#register{
+	width: 100%;
+	color: aliceblue;
+	background: blue;
+}
+
+#signin{
+	width: 100%;
+	color: aliceblue;
+	background: green;
+}
+
+.box1{
+	grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 2;
+	grid-row-end: 3;
+}
+
+.box2{
+	grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 3;
+}
+
+.box3{
+
+	grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 4;
+}
+
+.box4{
+	grid-column-start: 1;
+	grid-column-end: 2;
+	grid-row-start: 5;
+}
+
+.box5{
+	grid-column-start: 2;
+	grid-column-end: 4;
+	grid-row-start: 5;
+}
+
+.box6{
+	grid-column-start: 1;
+	grid-column-end: 2;
+	grid-row-start: 6;
+}
+.box7{
+	grid-column-start: 2;
+	grid-column-end: 4;
+	grid-row-start: 6;
+}
+
+.form-header{
+	grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 1;
+	text-align: center;
+}
+
+.nameinput{
+	display: inline-block;
+}
+
+.highlight{
+	color: aliceblue;
+	background: blue;
+}
