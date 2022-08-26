@@ -34,9 +34,7 @@ const View = (() => {
     }
 
     return {
-        domstr,
-        render,
-        createTmp
+        domstr, render, createTmp
     }
 
 })()
@@ -82,8 +80,7 @@ const Model = ((api, view) => {
     const {getCourse} = api
 
     return {
-        getCourse,
-        State
+        getCourse, State
     }
 
 })(Api, View)
@@ -94,31 +91,31 @@ const Controller = ((model, view) => {
     let creditAll = document.querySelector(view.domstr.credit)
     let creditCal = +creditAll.innerText.split(":")[1].trim()
 
-    const addToSelect = () => {
-        const selectCourse = document.querySelector(view.domstr.availableCourses)
-        selectCourse.addEventListener('click', (event) => {
 
-            if (event.target.innerText.includes("Available Courses")) {
-                console.log("Not available")
-            } else if (event.target.style.backgroundColor === "rgb(64, 189, 251)") {
+    const changeColandCal = (event) => {
+        if (event.target.innerText.includes("Available Courses")) {
+            console.log("Not available")
+        } else if (event.target.style.backgroundColor === "rgb(64, 189, 251)") {
+            let credit = +event.target.innerText.split(":")[2].trim()
+            event.target.style.backgroundColor = ""
+            creditAll.innerHTML = `Total Credit : ${creditCal -= credit}`
+        } else {
+            let credit = +event.target.innerText.split(":")[2].trim()
+            event.target.style.backgroundColor = "#40bdfb"
+            creditCal += credit
+            creditAll.innerHTML = `Total Credit : ${creditCal}`
+            if (creditCal > 18) {
+                alert("You cannot choose more than 18 credits in one semester")
                 let credit = +event.target.innerText.split(":")[2].trim()
                 event.target.style.backgroundColor = ""
                 creditAll.innerHTML = `Total Credit : ${creditCal -= credit}`
-            } else {
-                let credit = +event.target.innerText.split(":")[2].trim()
-                event.target.style.backgroundColor = "#40bdfb"
-                creditCal += credit
-                creditAll.innerHTML = `Total Credit : ${creditCal}`
-                if (creditCal > 18) {
-                    alert("You cannot choose more than 18 credits in one semester")
-                    let credit = +event.target.innerText.split(":")[2].trim()
-                    event.target.style.backgroundColor = ""
-                    creditAll.innerHTML = `Total Credit : ${creditCal -= credit}`
-                }
-
             }
+        }
+    }
 
-        })
+    const addToSelect = () => {
+        const selectCourse = document.querySelector(view.domstr.availableCourses)
+        selectCourse.addEventListener('click', changeColandCal)
     }
 
     const addButton = () => {
@@ -136,25 +133,28 @@ const Controller = ((model, view) => {
                 selectId.push(+elem.innerHTML.split(">")[1].split(":")[0])
             }
 
-            if(creditCal <= 18){
+            if (creditCal <= 18) {
                 confirm(`You have chosen ${creditCal} credits for this semester. You cannot change once you submit. Do you want to confirm?`)
+                let selectCourse = []
+                for (let id of selectId) {
+                    selectCourse.push(state.allList.filter(x => x.courseId === id))
+                }
+                state.selectList = selectCourse.flat()
+
+                for (let id of selectId) {
+                    state.allList = state.allList.filter(x => x.courseId !== id)
+                }
+
+                document.querySelectorAll("#selectedCourses>li").forEach(elem => {
+                    elem.style.borderWidth = "thin"
+                    elem.style.borderStyle = "solid"
+                })
                 selButt.disabled = true
-            }
+                const availList = document.querySelector(view.domstr.availableCourses)
+                availList.removeEventListener("click", changeColandCal)
 
-            let selectCourse = []
-            for (let id of selectId) {
-                selectCourse.push(state.allList.filter(x => x.courseId === id))
-            }
-            state.selectList = selectCourse.flat()
 
-            for (let id of selectId) {
-                state.allList = state.allList.filter(x => x.courseId !== id)
             }
-
-            document.querySelectorAll("#selectedCourses>li").forEach(elem => {
-                elem.style.borderWidth = "thin"
-                elem.style.borderStyle = "solid"
-            })
         })
     }
 
