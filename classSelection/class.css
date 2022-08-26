@@ -75,3 +75,7 @@ li:first-child{
 p button{
     display: inline;
 }
+
+li>span{
+    display: none;
+}

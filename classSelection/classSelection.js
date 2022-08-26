@@ -5,7 +5,7 @@ const View = (() => {
         courseList: "coursesList",
         availableCourses: "#availableCourses",
         credit: "#credit",
-        button:"button"
+        button: "#select"
     }
 
     const render = (ele, tmp) => {
@@ -23,7 +23,7 @@ const View = (() => {
             }
             tmp += `
             <li>
-                ${course.courseName}<br>
+                <span class="idCol">${course.courseId}:</span>${course.courseName}<br>
                 Course Type : ${courseType}<br>
                 Course Credit : ${course.credit}
             </li>
@@ -107,7 +107,7 @@ const Controller = ((model, view) => {
                 event.target.style.backgroundColor = "#40bdfb"
                 creditCal += credit
                 creditAll.innerHTML = `Total Credit : ${creditCal}`
-                if(creditCal > 18){
+                if (creditCal > 18) {
                     alert("You cannot choose more than 18 credits in one semester")
                     let credit = +event.target.innerText.split(":")[2].trim()
                     event.target.style.backgroundColor = ""
@@ -119,10 +119,22 @@ const Controller = ((model, view) => {
         })
     }
 
-    const addButton =()=>{
-        const button = document.querySelector(view.domstr.button)
-        button.addEventListener("click",(event)=>{
+    const addButton = () => {
+        const selButt = document.querySelector(view.domstr.button)
+        selButt.addEventListener('click', (event) => {
+            let allSelect = []
+            let selectId = []
+            document.querySelectorAll("#availableCourses>li").forEach(elem => {
+                if (elem.style.backgroundColor === "rgb(64, 189, 251)") {
+                    allSelect.push(elem)
+                }
+            })
+            console.log(allSelect)
+            for(let elem of allSelect){
+                selectId.push(+elem.innerHTML.split(">")[1].split(":")[0])
+            }
 
+            console.log(selectId)
         })
     }
 
@@ -137,6 +149,7 @@ const Controller = ((model, view) => {
     const bootstrap = () => {
         init()
         addToSelect()
+        addButton()
     }
 
     return {
