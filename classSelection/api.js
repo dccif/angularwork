@@ -4,7 +4,6 @@ export const Api = (() => {
 
     const getCourse = () => fetch([baseUrl, courseList].join('/')).then((response) => response.json())
 
-
     return {
         getCourse
     }

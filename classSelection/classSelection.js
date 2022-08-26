@@ -55,7 +55,7 @@ const Model = ((api, view) => {
         #selectList = []
 
         get allList() {
-            return this.allList
+            return this.#allList
         }
 
         set allList(newList) {
@@ -70,6 +70,8 @@ const Model = ((api, view) => {
         }
 
         set selectList(newCourse) {
+
+
             this.#selectList = [...newCourse]
             const selectCourse = document.querySelector(view.domstr.availableCourses)
 
@@ -130,11 +132,14 @@ const Controller = ((model, view) => {
                 }
             })
             console.log(allSelect)
-            for(let elem of allSelect){
+            for (let elem of allSelect) {
                 selectId.push(+elem.innerHTML.split(">")[1].split(":")[0])
             }
 
+            console.log(state.allList)
             console.log(selectId)
+
+            // state.allList =
         })
     }
 
