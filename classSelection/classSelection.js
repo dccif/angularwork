@@ -152,7 +152,7 @@ const Controller = ((model, view) => {
                     })
                     selButt.disabled = true
                     const availList = document.querySelector(view.domstr.availableCourses)
-                    availList.removeEventListener("click", changeColandCal)
+                    // availList.removeEventListener("click", changeColandCal)
                 } else {
 
                 }
