@@ -139,7 +139,9 @@ const Controller = ((model, view) => {
             console.log(state.allList)
             console.log(selectId)
 
-            // state.allList =
+            for(let id of selectId){
+               state.allList = state.allList.filter(x=>x.courseId !== id)
+            }
         })
     }
 
