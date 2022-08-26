@@ -134,26 +134,28 @@ const Controller = ((model, view) => {
             }
 
             if (creditCal <= 18) {
-                confirm(`You have chosen ${creditCal} credits for this semester. You cannot change once you submit. Do you want to confirm?`)
-                let selectCourse = []
-                for (let id of selectId) {
-                    selectCourse.push(state.allList.filter(x => x.courseId === id))
+                let res = confirm(`You have chosen ${creditCal} credits for this semester. You cannot change once you submit. Do you want to confirm?`)
+                if (res) {
+                    let selectCourse = []
+                    for (let id of selectId) {
+                        selectCourse.push(state.allList.filter(x => x.courseId === id))
+                    }
+                    state.selectList = selectCourse.flat()
+
+                    for (let id of selectId) {
+                        state.allList = state.allList.filter(x => x.courseId !== id)
+                    }
+
+                    document.querySelectorAll("#selectedCourses>li").forEach(elem => {
+                        elem.style.borderWidth = "thin"
+                        elem.style.borderStyle = "solid"
+                    })
+                    selButt.disabled = true
+                    const availList = document.querySelector(view.domstr.availableCourses)
+                    availList.removeEventListener("click", changeColandCal)
+                } else {
+
                 }
-                state.selectList = selectCourse.flat()
-
-                for (let id of selectId) {
-                    state.allList = state.allList.filter(x => x.courseId !== id)
-                }
-
-                document.querySelectorAll("#selectedCourses>li").forEach(elem => {
-                    elem.style.borderWidth = "thin"
-                    elem.style.borderStyle = "solid"
-                })
-                selButt.disabled = true
-                const availList = document.querySelector(view.domstr.availableCourses)
-                availList.removeEventListener("click", changeColandCal)
-
-
             }
         })
     }
