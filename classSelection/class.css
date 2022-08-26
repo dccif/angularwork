@@ -75,8 +75,11 @@ li:first-child{
     align-items: center;
 
 }
-p button{
+p,button{
     display: inline;
+}
+div>p{
+    margin-right: 1ch;
 }
 
 li>span{
