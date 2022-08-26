@@ -91,14 +91,17 @@ const Controller = ((model, view) => {
     let creditAll = document.querySelector(view.domstr.credit)
     let creditCal = +creditAll.innerText.split(":")[1].trim()
 
+    const cancelCredit = (event) => {
+        let credit = +event.target.innerText.split(":")[2].trim()
+        event.target.style.backgroundColor = ""
+        creditAll.innerHTML = `Total Credit : ${creditCal -= credit}`
+    }
 
     const changeColandCal = (event) => {
         if (event.target.innerText.includes("Available Courses")) {
             console.log("Not available")
         } else if (event.target.style.backgroundColor === "rgb(64, 189, 251)") {
-            let credit = +event.target.innerText.split(":")[2].trim()
-            event.target.style.backgroundColor = ""
-            creditAll.innerHTML = `Total Credit : ${creditCal -= credit}`
+            cancelCredit(event)
         } else {
             let credit = +event.target.innerText.split(":")[2].trim()
             event.target.style.backgroundColor = "#40bdfb"
@@ -106,9 +109,7 @@ const Controller = ((model, view) => {
             creditAll.innerHTML = `Total Credit : ${creditCal}`
             if (creditCal > 18) {
                 alert("You cannot choose more than 18 credits in one semester")
-                let credit = +event.target.innerText.split(":")[2].trim()
-                event.target.style.backgroundColor = ""
-                creditAll.innerHTML = `Total Credit : ${creditCal -= credit}`
+                cancelCredit(event)
             }
         }
     }
