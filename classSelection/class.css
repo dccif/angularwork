@@ -48,6 +48,9 @@ li:first-child{
 
 .coursesList>li{
     vertical-align: middle;
+}
+
+#availableCourses>li{
     border-width: thin;
     border-style: solid;
 }

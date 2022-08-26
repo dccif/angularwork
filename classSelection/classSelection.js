@@ -4,6 +4,7 @@ const View = (() => {
     const domstr = {
         courseList: "coursesList",
         availableCourses: "#availableCourses",
+        selectedCourses: "#selectedCourses",
         credit: "#credit",
         button: "#select"
     }
@@ -70,11 +71,8 @@ const Model = ((api, view) => {
         }
 
         set selectList(newCourse) {
-
-
             this.#selectList = [...newCourse]
             const selectCourse = document.querySelector(view.domstr.availableCourses)
-
         }
 
     }
@@ -139,8 +137,8 @@ const Controller = ((model, view) => {
             console.log(state.allList)
             console.log(selectId)
 
-            for(let id of selectId){
-               state.allList = state.allList.filter(x=>x.courseId !== id)
+            for (let id of selectId) {
+                state.allList = state.allList.filter(x => x.courseId !== id)
             }
         })
     }
