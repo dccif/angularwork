@@ -13,8 +13,8 @@ const View = (() => {
         ele.innerHTML = tmp
     }
 
-    const createTmp = (arr) => {
-        let tmp = "<li>Available Courses</li>"
+    const createTmp = (arr, list = "Available") => {
+        let tmp = `<li>${list} Courses</li>`
         arr.forEach((course) => {
             let courseType
             if (course.required) {
@@ -67,12 +67,14 @@ const Model = ((api, view) => {
         }
 
         get selectList() {
-            return this.selectList
+            return this.#selectList
         }
 
         set selectList(newCourse) {
             this.#selectList = [...newCourse]
-            const selectCourse = document.querySelector(view.domstr.availableCourses)
+            const selectCourse = document.querySelector(view.domstr.selectedCourses)
+            const tmp = view.createTmp(this.#selectList, "Selected")
+            view.render(selectCourse, tmp)
         }
 
     }
@@ -89,12 +91,12 @@ const Model = ((api, view) => {
 
 const Controller = ((model, view) => {
     const state = new model.State()
+    let creditAll = document.querySelector(view.domstr.credit)
+    let creditCal = +creditAll.innerText.split(":")[1].trim()
 
     const addToSelect = () => {
         const selectCourse = document.querySelector(view.domstr.availableCourses)
         selectCourse.addEventListener('click', (event) => {
-            let creditAll = document.querySelector(view.domstr.credit)
-            let creditCal = +creditAll.innerText.split(":")[1].trim()
 
             if (event.target.innerText.includes("Available Courses")) {
                 console.log("Not available")
@@ -134,12 +136,25 @@ const Controller = ((model, view) => {
                 selectId.push(+elem.innerHTML.split(">")[1].split(":")[0])
             }
 
-            console.log(state.allList)
-            console.log(selectId)
+            if(creditCal <= 18){
+                confirm(`You have chosen ${creditCal} credits for this semester. You cannot change once you submit. Do you want to confirm?`)
+                selButt.disabled = true
+            }
+
+            let selectCourse = []
+            for (let id of selectId) {
+                selectCourse.push(state.allList.filter(x => x.courseId === id))
+            }
+            state.selectList = selectCourse.flat()
 
             for (let id of selectId) {
                 state.allList = state.allList.filter(x => x.courseId !== id)
             }
+
+            document.querySelectorAll("#selectedCourses>li").forEach(elem => {
+                elem.style.borderWidth = "thin"
+                elem.style.borderStyle = "solid"
+            })
         })
     }
 
